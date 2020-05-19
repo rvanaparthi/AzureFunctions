@@ -180,7 +180,7 @@
                           "apiId": "[parameters("APIId")"]",
                           "uri": "[parameters('Uri')]",
                           "timeInterval": "[parameters('TimeInterval')]",
-                          "WEBSITE_RUN_FROM_PACKAGE": "https://github.com/rvanaparthi/AzureFunction/blob/master/azure-arm-templates/Okta.zip?raw=true"
+                          "WEBSITE_RUN_FROM_PACKAGE": "https://github.com/rvanaparthi/Azure/blob/master/DataConnectors/CarbonBlackDefense/azure-arm-templates/AzureFunctionCarbonBlackDefenseAPI.zip?raw=true"
                          
                                    } 
                   }
