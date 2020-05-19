@@ -24,7 +24,7 @@
           },
           "Uri": {
               "type": "string",
-              "defaultValue": "https://<OktaDomain>/api/v1/logs?since="
+              "defaultValue": "https://<CarbonBlackDefence Domain>/integrationServices/v3/auditlogs"
           },
           "TimeInterval": {
               "type": "string",
