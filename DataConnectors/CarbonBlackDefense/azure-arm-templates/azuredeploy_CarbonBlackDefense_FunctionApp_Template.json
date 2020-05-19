@@ -177,7 +177,7 @@
                           "workspaceId": "[parameters('WorkspaceId')]",
                           "workspaceKey": "[parameters('WorkspaceKey')]",
                           "apiToken": "[parameters('APIToken')]",
-                          "apiId": "[parameters("APIId")"]",
+                          "apiId": "[parameters('APIId')]",
                           "uri": "[parameters('Uri')]",
                           "timeInterval": "[parameters('TimeInterval')]",
                           "WEBSITE_RUN_FROM_PACKAGE": "https://github.com/rvanaparthi/Azure/blob/master/DataConnectors/CarbonBlackDefense/azure-arm-templates/AzureFunctionCarbonBlackDefenseAPI.zip?raw=true"
