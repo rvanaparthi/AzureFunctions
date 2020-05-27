@@ -40,7 +40,12 @@ function CarbonBlackAPI()
 
     $startTime = [System.DateTime]::UtcNow.AddMinutes(-$($time)).ToString("yyyy-MM-ddTHH:mm:ssZ")
     $now = [System.DateTime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ")
-
+    if($apiSecretKey -eq '<Optional>' -or  $apiId -eq '<Optional>'  -or [string]::IsNullOrWhitespace($apiSecretKey) -or  [string]::IsNullOrWhitespace($apiId))
+    {
+        Write-Output "Please pass the Notification for security API Key and API Id as they are Optional"
+    }
+    else
+    {
     $authHeaders = @{
         "X-Auth-Token" = "$($apiSecretKey)/$($apiId)"
     }
@@ -70,7 +75,9 @@ function CarbonBlackAPI()
         {
             Write-Host "No new Carbon Black Events as of $([DateTime]::UtcNow)"
         }
+      }
     }
+
     if($notifapiKey -eq '<Optional>' -or  $notifapiId -eq '<Optional>'  -or [string]::IsNullOrWhitespace($notifapiKey) -or  [string]::IsNullOrWhitespace($notifapiId))
     {   
          Write-Host "Please pass the Notification API Key and API Id as they are left Optional"   
@@ -94,6 +101,7 @@ function CarbonBlackAPI()
         }      
     }    
 }
+
 
 # Create the function to create the authorization signature
 function Build-Signature ($customerId, $sharedKey, $date, $contentLength, $method, $contentType, $resource)
