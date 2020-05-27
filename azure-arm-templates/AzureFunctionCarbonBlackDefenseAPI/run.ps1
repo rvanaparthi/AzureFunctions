@@ -2,7 +2,7 @@
     Title:          CarbonBlack Data Connector
     Language:       PowerShell
     Version:        1.0
-    Author(s):      John Bailey
+    Author:         Microsoft
     Last Modified:  5/19/2020
     Comment:        Inital Release
 
@@ -18,22 +18,25 @@ param($Timer)
 # Get the current universal time in the default string format
 $currentUTCtime = (Get-Date).ToUniversalTime()
 
-# The 'IsPastDue' porperty is 'true' when the current function invocation is later than scheduled.
+# The 'IsPastDue' property is 'true' when the current function invocation is later than scheduled.
 if ($Timer.IsPastDue) {
     Write-Host "PowerShell timer is running late!"
 }
 
-# The function will call the 
+# The function will call the Carbon Black API and retrieve 
 function CarbonBlackAPI()
 {
     $workspaceId = $env:workspaceId
     $workspaceSharedKey = $env:workspaceKey
     $hostName = $env:uri
-    $apiSecretKey = $env:apiToken
+    $apiSecretKey = $env:apiKey
     $apiId = $env:apiId
+    $notifapikey = $env:SIEMapiKey #change variable names to SIEMapikey
+    $notifapiId = $env:SIEMapiId
     $time = $env:timeInterval
     $AuditLogTable = "CarbonBlackAuditLogs"
     $EventLogTable = "CarbonBlackEvents"
+    $NotificationTable  = "CarbonBlackNotifications"
 
     $startTime = [System.DateTime]::UtcNow.AddMinutes(-$($time)).ToString("yyyy-MM-ddTHH:mm:ssZ")
     $now = [System.DateTime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ")
@@ -43,6 +46,7 @@ function CarbonBlackAPI()
     }
     $auditLogsResult = Invoke-RestMethod -Headers $authHeaders -Uri ([System.Uri]::new("$($hostName)/integrationServices/v3/auditlogs"))
     $eventsResult = Invoke-RestMethod -Headers $authHeaders -Uri ([System.Uri]::new("$($hostName)/integrationServices/v3/event?startTime=$($startTime)&endTime=$($now)"))
+
     if ($auditLogsResult.success -eq $true)
     {
         $AuditLogsJSON = $auditLogsResult.notifications | ConvertTo-Json -Depth 5
@@ -52,7 +56,7 @@ function CarbonBlackAPI()
         }
         else
         {
-            Write-Host "No new Carbon Black Audit Events at $([DateTime]::UtcNow)"
+            Write-Host "No new Carbon Black Audit Events as of $([DateTime]::UtcNow)"
         }
     }
     if ($eventsResult.success -eq $true)
@@ -64,9 +68,31 @@ function CarbonBlackAPI()
         }
         else
         {
-            Write-Host "No new Carbon Black Events at $([DateTime]::UtcNow)"
+            Write-Host "No new Carbon Black Events as of $([DateTime]::UtcNow)"
         }
     }
+    if($notifapiKey -eq '<Optional>' -or  $notifapiId -eq '<Optional>'  -or [string]::IsNullOrWhitespace($notifapiKey) -or  [string]::IsNullOrWhitespace($notifapiId))
+    {   
+         Write-Host "Please pass the Notification API Key and API Id as they are left Optional"   
+    }
+    else
+    {                
+        $authHeaders = @{"X-Auth-Token" = "$($notifapiKey)/$($notifapiId)"}
+        $notifications = Invoke-RestMethod -Headers $authHeaders -Uri ([System.Uri]::new("$($hostName)/integrationServices/v3/notification"))
+        if ($notifications.success -eq $true)
+        {                
+            $NotifLogJson = $notifications.notifications | ConvertTo-Json -Depth 5       
+            if (-not([string]::IsNullOrWhiteSpace($NotifLogJson)))
+            {
+                Post-LogAnalyticsData -customerId $workspaceId -sharedKey $workspaceSharedKey -body ([System.Text.Encoding]::UTF8.GetBytes($NotifLogJson)) -logType $NotificationTable;
+            }
+            else
+            {
+                    Write-Host "No new Carbon Black Notifications as of $([DateTime]::UtcNow)"
+            }
+                 
+        }      
+    }    
 }
 
 # Create the function to create the authorization signature

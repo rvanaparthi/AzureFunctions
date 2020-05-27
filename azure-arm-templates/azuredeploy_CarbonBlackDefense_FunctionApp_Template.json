@@ -24,13 +24,22 @@
           },
           "Uri": {
               "type": "string",
-              "defaultValue": "https://<CarbonBlackDefence Domain>/integrationServices/v3/auditlogs"
+              "defaultValue": "https://<CarbonBlackDefence Domain>"
+          },
+          "SIEMapiKey": {
+              "type": "string",
+              "defaultValue": "<Optional>"
+          },
+          "SIEMapiId": {
+              "type": "string",
+              "defaultValue": "<Optional>"
           },
           "TimeInterval": {
               "type": "string",
               "defaultValue": "5"
           }
       },
+    
       "variables": {
       },
       "resources": [
@@ -180,8 +189,9 @@
                           "apiId": "[parameters('APIId')]",
                           "uri": "[parameters('Uri')]",
                           "timeInterval": "[parameters('TimeInterval')]",
-                          "WEBSITE_RUN_FROM_PACKAGE": "https://github.com/rvanaparthi/CarbonBlackDefense/blob/master/azure-arm-templates/AzureFunctionCarbonBlackDefenseAPI.zip?raw=true"
-                         
+                          "WEBSITE_RUN_FROM_PACKAGE": "https://github.com/rvanaparthi/CarbonBlackDefense/blob/master/azure-arm-templates/AzureFunctionCarbonBlackDefenseAPI.zip?raw=true",
+                          "SIEMapiKey":"[parameters('SIEMapiKey')]",
+                          "SIEMapiId":"[parameters('SIEMapiId')]"
                                    } 
                   }
               ]
