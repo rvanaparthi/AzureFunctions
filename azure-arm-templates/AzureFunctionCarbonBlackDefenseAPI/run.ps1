@@ -38,11 +38,15 @@ function CarbonBlackAPI()
     $EventLogTable = "CarbonBlackEvents"
     $NotificationTable  = "CarbonBlackNotifications"
 
+
     $startTime = [System.DateTime]::UtcNow.AddMinutes(-$($time)).ToString("yyyy-MM-ddTHH:mm:ssZ")
     $now = [System.DateTime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ")
+
+    Write-Host $apiSecretKey
+    Write-Host $apiId
     if($apiSecretKey -eq '<Optional>' -or  $apiId -eq '<Optional>'  -or [string]::IsNullOrWhitespace($apiSecretKey) -or  [string]::IsNullOrWhitespace($apiId))
     {
-        Write-Output "Please pass the Notification for security API Key and API Id as they are Optional"
+        Write-Host "Please pass the Notification for security API Key and API Id as they are Optional"
     }
     else
     {
