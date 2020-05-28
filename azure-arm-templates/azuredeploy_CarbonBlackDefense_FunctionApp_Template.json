@@ -185,7 +185,7 @@
                           "WEBSITE_CONTENTSHARE": "[toLower(parameters('FunctionName'))]",
                           "workspaceId": "[parameters('WorkspaceId')]",
                           "workspaceKey": "[parameters('WorkspaceKey')]",
-                          "apiToken": "[parameters('APIToken')]",
+                          "apiKey": "[parameters('APIToken')]",
                           "apiId": "[parameters('APIId')]",
                           "uri": "[parameters('Uri')]",
                           "timeInterval": "[parameters('TimeInterval')]",
