@@ -14,23 +14,23 @@
               "type": "string",
               "defaultValue": "<workspaceKey>"
           },
-          "APIToken": {
+          "APIKey": {
               "type": "string",
-              "defaultValue": "<Optional>"
+              "defaultValue": "<apiKey>"
           },
           "APIId": {
               "type": "string",
-              "defaultValue": "<Optional>"
+              "defaultValue": "<apiId>"
           },
           "Uri": {
               "type": "string",
               "defaultValue": "https://<CarbonBlackDefence Domain>"
           },
-          "SIEMapiKey": {
+          "SIEMApiKey": {
               "type": "string",
               "defaultValue": "<Optional>"
           },
-          "SIEMapiId": {
+          "SIEMApiID": {
               "type": "string",
               "defaultValue": "<Optional>"
           },
