@@ -24,7 +24,7 @@
           },
           "Uri": {
               "type": "string",
-              "defaultValue": "https://<CarbonBlackDefence Domain>"
+              "defaultValue": "https://<API URL>"
           },
           "SIEMapiKey": {
               "type": "string",
