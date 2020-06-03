@@ -1,9 +1,9 @@
 {
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
       "parameters": {
           "FunctionName": {
-              "defaultValue": "CarbonBlackDefenseAPI",
+              "defaultValue": "CarbonBlackCloudAPI",
               "type": "string"
           },  
           "WorkspaceId": {
@@ -185,7 +185,7 @@
                           "WEBSITE_CONTENTSHARE": "[toLower(parameters('FunctionName'))]",
                           "workspaceId": "[parameters('WorkspaceId')]",
                           "workspaceKey": "[parameters('WorkspaceKey')]",
-                          "apiKey": "[parameters('APIToken')]",
+                          "apiKey": "[parameters('APIKey')]",
                           "apiId": "[parameters('APIId')]",
                           "uri": "[parameters('Uri')]",
                           "timeInterval": "[parameters('TimeInterval')]",
